@@ -1,0 +1,27 @@
+.Postlist {
+  display: flex;
+}
+
+.User {
+  width: 25%;
+  height: 20px;
+}
+.Userbutton {
+  background-color: rgb(0, 153, 255);
+  width: 100%;
+}
+.Post {
+  background-color: bluered;
+  width: 60%;
+  margin-left: 20px;
+  padding: 10px;
+  border: solid;
+  margin: 20px;
+}
+.Postcard {
+  background-color: bluered;
+  width: 80%;
+  padding: 10px;
+  border: solid;
+  margin: 10px;
+}
