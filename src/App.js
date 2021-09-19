@@ -8,24 +8,26 @@ import PostList from "./components/post/postList";
 function App() {
   const [data, setData] = useState();
   const [posts, setPosts] = useState();
+  const [token, setToken] = useState();
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
+    console.log(
+      "token at use effect is",
+      window.localStorage.getItem("sl_token")
+    );
     fetchPosts();
   }, []);
 
   //Reminder: will need to define errors more precisely
 
-  const handleLogin = () => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
     window.localStorage.setItem("email", email);
     window.localStorage.setItem("name", name);
-    fetchData();
-    fetchPosts();
-  };
 
-  const fetchData = async () => {
     if (
       window.localStorage.getItem("name") &&
       window.localStorage.getItem("email")
@@ -38,12 +40,17 @@ function App() {
         console.log(datas);
         console.log("The data is", datas);
         window.localStorage.setItem("sl_token", datas.data.sl_token);
+        setToken(datas.data.sl_token);
+        setName("");
+        setEmail("");
       } catch (error) {
         console.log("error sending the post request");
       }
     else {
       console.log("error in name and email");
     }
+
+    fetchPosts();
   };
 
   const fetchPosts = async () => {

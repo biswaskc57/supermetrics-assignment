@@ -10,17 +10,19 @@ const Login = ({ handleLogin, setName, setEmail }) => {
   };
 
   return (
-    <div>
-      <p>
-        Name:
-        <input onChange={(e) => nameHandler(e)} />
-      </p>
-      <p>
-        Email:
-        <input onChange={(e) => emailHandler(e)} />
-      </p>
-      <button onClick={handleLogin}>Login</button>
-    </div>
+    <form onSubmit={handleLogin}>
+      <div>
+        <p>
+          Name:
+          <input onChange={(e) => nameHandler(e)} />
+        </p>
+        <p>
+          Email:
+          <input onChange={(e) => emailHandler(e)} />
+        </p>
+        <button type="submit">Login</button>
+      </div>
+    </form>
   );
 };
 
