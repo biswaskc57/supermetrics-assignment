@@ -14,14 +14,8 @@ function App() {
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
-    console.log(
-      "token at use effect is",
-      window.localStorage.getItem("sl_token")
-    );
     fetchPosts();
   }, []);
-
-  //Reminder: will need to define errors more precisely
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -54,22 +48,13 @@ function App() {
   };
 
   const fetchPosts = async () => {
-    console.log(
-      "checking the localstorage token",
-      window.localStorage.getItem("sl_token")
-    );
     if (window.localStorage.getItem("sl_token")) {
       try {
-        let dataList = await postServices.getPosts(
-          window.localStorage.getItem("sl_token"),
-          pageNumber
+        let dataList = await postServices.getAllPosts(
+          window.localStorage.getItem("sl_token")
         );
         setData(dataList);
-        setPosts(dataList.data.posts);
-
-        console.log(dataList);
-
-        console.log("Posts to show are", dataList.data.posts);
+        console.log(data);
       } catch (error) {
         console.log("error sending the get request");
       }
@@ -77,7 +62,7 @@ function App() {
       console.log("no local storage");
     }
   };
-
+  console.log("the data in app page is", data);
   if (!data)
     return (
       <div className="App">

@@ -27,12 +27,36 @@ const create = async (name, email) => {
 
 const getPosts = async (token, pageNumber) => {
   let url = `${getUrl}?sl_token=${token}&page=${pageNumber}`;
-  console.log("token in get posts is", url);
-  console.log("Url is", url);
-  const response = await axios.get(url);
-  console.log("response in getPosts services is", response.data);
 
-  return response.data;
+  console.log("token in get posts is", token);
+  console.log("Url is", url);
+  const body = await axios.get(url);
+  const response = await body.data.data.posts;
+  return response;
 };
 
-export default { create, getPosts };
+export const getAllPosts = async (token) => {
+  const requests = [];
+
+  for (let i = 1; i <= 10; i++) {
+    requests.push(getPosts(token, i));
+  }
+
+  console.log("if you are seeing this, its before amazing");
+
+  const responses = await Promise.all(requests);
+  /*Promise.all(requests)
+    .then((data) => {
+      responses = data.flat();
+    })
+    .catch((error) => {
+      console.log("error");
+    });*/
+
+  console.log("if you are seeing this, its amazing");
+
+  console.log("combined response is", responses.flat());
+  return responses.flat();
+};
+
+export default { create, getPosts, getAllPosts };
