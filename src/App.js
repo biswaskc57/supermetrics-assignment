@@ -1,17 +1,13 @@
 import "./App.css";
-
 import React, { useState, useEffect } from "react";
 import Login from "./components/login/login";
 import postServices from "./controllers/posts";
 import PostList from "./components/post/postList";
 
 function App() {
-  const [data, setData] = useState();
-  const [posts, setPosts] = useState();
-  const [token, setToken] = useState();
+  const [data, setData] = useState(null);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     fetchPosts();
@@ -19,6 +15,7 @@ function App() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     window.localStorage.setItem("email", email);
     window.localStorage.setItem("name", name);
 
@@ -31,18 +28,16 @@ function App() {
           window.localStorage.getItem("name"),
           window.localStorage.getItem("email")
         );
-        console.log(datas);
-        console.log("The data is", datas);
+
         window.localStorage.setItem("sl_token", datas.data.sl_token);
-        setToken(datas.data.sl_token);
         setName("");
         setEmail("");
       } catch (error) {
-        console.log("error sending the post request");
+        window.localStorage.clear();
+        alert(
+          "Error sending the post request. Check your internet conncection and try to log in again"
+        );
       }
-    else {
-      console.log("error in name and email");
-    }
 
     fetchPosts();
   };
@@ -50,23 +45,24 @@ function App() {
   const fetchPosts = async () => {
     if (window.localStorage.getItem("sl_token")) {
       try {
-        let dataList = await postServices.getAllPosts(
+        const dataList = await postServices.getAllPosts(
           window.localStorage.getItem("sl_token")
         );
         setData(dataList);
-        console.log(data);
       } catch (error) {
-        console.log("error sending the get request");
+        window.localStorage.clear();
+        alert(
+          "The Sl_token is not correct or the token has expired. Please reload the page to login"
+        );
+        window.location.reload();
       }
-    } else {
-      console.log("no local storage");
     }
   };
-  console.log("the data in app page is", data);
-  if (!data)
+
+  if (data === null && !window.localStorage.getItem("sl_token"))
     return (
       <div className="App">
-        Supermetrics ASSIGNMENT
+        <h1>Supermetrics Assignment</h1>
         <Login
           handleLogin={handleLogin}
           setName={setName}
@@ -75,9 +71,9 @@ function App() {
         />
       </div>
     );
-  return (
-    <PostList data={data} setPosts={setPosts} posts={posts} setData={setData} />
-  );
+  else if (data === null && window.localStorage.getItem("sl_token"))
+    return <p>loading...</p>;
+  else return <PostList data={data} setData={setData} />;
 }
 
 export default App;

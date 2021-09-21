@@ -1,0 +1,19 @@
+.login {
+  padding: 50px;
+  margin: 140px;
+  border: 80px;
+  background-color: crimson;
+  height: 280px;
+}
+
+.login-input {
+  padding: 10px;
+  width: 50%;
+  margin: 10px;
+  border: 2px;
+}
+.login-button {
+  width: 100px;
+  border-radius: 10px;
+  background-color: rgb(21, 155, 155);
+}

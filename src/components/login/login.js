@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./login.css";
 const Login = ({ handleLogin, setName, setEmail }) => {
   const nameHandler = (event) => {
     setName(event.target.value);
@@ -10,19 +10,31 @@ const Login = ({ handleLogin, setName, setEmail }) => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>
+    <div className="login">
+      <form className="login-box" onSubmit={handleLogin}>
         <p>
           Name:
-          <input onChange={(e) => nameHandler(e)} />
+          <input
+            type="text"
+            placeholder="Name"
+            onChange={(e) => nameHandler(e)}
+            className="login-input"
+          />
         </p>
         <p>
           Email:
-          <input onChange={(e) => emailHandler(e)} />
+          <input
+            type="email"
+            placeholder="Email"
+            onChange={(e) => emailHandler(e)}
+            className="login-input"
+          />
         </p>
-        <button type="submit">Login</button>
-      </div>
-    </form>
+        <button className="login-button" type="submit">
+          Login
+        </button>
+      </form>
+    </div>
   );
 };
 
