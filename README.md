@@ -1,6 +1,8 @@
 
 Supermetrics assignment:
 
+Site live at:
+https://614ac1dd180eab50cb9254a9--nifty-brown-ba29ba.netlify.app/
 
 login page:
 <img width="1316" alt="Screenshot 2021-09-21 at 22 32 09" src="https://user-images.githubusercontent.com/49017154/134237762-3952b95a-056e-4f22-bff7-0e23b0ae856e.png">
